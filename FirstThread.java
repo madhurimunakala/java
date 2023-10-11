@@ -6,6 +6,8 @@ public class FirstThread extends Thread {
    }
    public FirstThread() {
 	   System.out.println("firstthread constructor");
+	   System.out.println("it's a constructot");
+	   
    }
    public static void main(String a[]) {
 	   FirstThread ft1=new FirstThread();
