@@ -14,6 +14,8 @@ public class FirstThread extends Thread {
 	   FirstThread ft2=new FirstThread();
 	   //ft1.run();
 	   ft1.start();
+	   ft1.setName("FirstThread");
+	   System.out.println(ft1.getName());
 	   //ft2.start();
 	   System.out.println("Default thread priority of Thread 1: " + ft1.getPriority());
 	   System.out.println("Default thread priority of Thread 2: " + ft2.getPriority());
