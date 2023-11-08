@@ -5,18 +5,23 @@
 <title>Homepage</title>
 </head>
 <body>
-<form action="" >
+<form action="ExpenseServlet" >
 	<table>
 		<tr>
-			<td ><label>Exp Date:</label><input type="text"/></td>
-			<td ><label>Category:</label><select name="operation">
+			<td ><label>Exp Date:</label><input type="date" name="exp_date"/></td>
+			<td ><label>Category:</label><select name="dropdown" id="dropdown">
 				<option></option>
-				<option>Food</option>
+				
+				<option value="1">Food</option>
+							<option value="2">Cloths</option>
+							<option value="3">House Holds</option>
+							<option value="4">Medicine&Hospital</option>
+							<option value="5">Travel&Fuel</option>
 				</select></td>
 		</tr>
 		<tr>
-			<td ><label>Exp Desc:</label><input type="text"/></td>
-			<td ><label>Amount:</label><input type="text"/></td>
+			<td ><label>Exp Desc:</label><input type="text"name="exp_desc" /></td>
+			<td ><label>Exp Amount:</label><input type="text" name="exp_amount"/></td>
 			<td align="center"><input type="submit" name="logout" value="logout" /></td>
 		</tr>
 		<tr>
