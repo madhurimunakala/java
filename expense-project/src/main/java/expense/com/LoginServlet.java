@@ -35,26 +35,7 @@ public class LoginServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		  try{  
-			  
-		        response.setContentType("text/html");  
-		        PrintWriter out = response.getWriter();  
-		          
-		        String n=request.getParameter("username");  
-		        out.print("Welcome "+n);  
-		  
-		        //appending the username in the query string  
-		        out.print("<a href='Servlet2?uname="+n+"'>visit</a>");  
-		                  
-		        out.close();  
-		  
-		                }
-		  catch(Exception e){
-			  System.out.println(e);
-			  }  
-		  
-	
-}
+	}
 		    
         
 	
@@ -90,8 +71,8 @@ public class LoginServlet extends HttpServlet {
                 	response.sendRedirect("http://localhost:8081/expense-project/user_home.html");
                 } else {
                     // Username does not exist in the database
-                    //response.getWriter().write("Username does not exist");
-                	response.sendRedirect("http://localhost:8081/expense-project/user_registration.html");
+                    response.getWriter().write("Username does not exist");
+                	//response.sendRedirect("http://localhost:8081/expense-project/user_registration.html");
                 }
 
                 // Close resources

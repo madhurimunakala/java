@@ -74,9 +74,9 @@ public class ExpenseServlet extends HttpServlet {
                 }
                 connection.close()	;
                 System.out.println("data succesfully inseted");
-                if(true) {
-                response.sendRedirect("http://localhost:8081/expense-project/index.html");
-                }
+                
+                response.sendRedirect("http://localhost:8081/expense-project/FetchUserExpensesServlet");
+                
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
