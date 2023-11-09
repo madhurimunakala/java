@@ -9,10 +9,10 @@
 	<table>
 		<tr>
 			<td ><label>Exp Date:</label><input type="date" name="exp_date"/></td>
-			<td ><label>Category:</label><select name="dropdown" id="dropdown">
+			<td ><label>Category:</label><select name="dropdown" >
 				<option></option>
 				
-				<option value="1">Food</option>
+				            <option value="1">Food</option>
 							<option value="2">Cloths</option>
 							<option value="3">House Holds</option>
 							<option value="4">Medicine&Hospital</option>
@@ -22,19 +22,15 @@
 		<tr>
 			<td ><label>Exp Desc:</label><input type="text"name="exp_desc" /></td>
 			<td ><label>Exp Amount:</label><input type="text" name="exp_amount"/></td>
-			<td align="center"><input type="submit" name="logout" value="logout" /></td>
+			
 		</tr>
 		<tr>
-			<td><input type="submit" name="submit" value="submit"/></td>
-	
+			<td colspan="2" style="text-align: center"><input type="submit" value="ADD EXPENSE"/></td>
 		</tr>
 </table>
 </form>
-<br/><br/><br/>
-<table border=\"1\">
-	<tr><th>Date</th><th>exp category</th><th>Description</th><th>Amount</th></tr>
-<tr><td>2023-11-05</td><td>food</td><td>biryani</td><td>200</td></tr>
-</table>
-
+<form action="index.html" align: center">
+	<input type="submit" name="logout" value="logout" />
+</form>
 </body>
 </html>
