@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -35,7 +36,7 @@ public class FetchUserExpensesServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		Connection con = null;
+		
 		try {
   
 			response.setContentType("text/html");
@@ -81,11 +82,17 @@ public class FetchUserExpensesServlet extends HttpServlet {
 		        pw.println("<form action='http://localhost:8081/expense-project/index.html' >");
 		        pw.println("<input type='submit' value='logout'>");
 		        pw.println("</form>");
-		        
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/cijd-8216","root","Madhu@405");
-			Statement stmt=con.createStatement();  
-			ResultSet rs=stmt.executeQuery("select * from expenses ORDER BY exp_date DESC");  
+		    
+		    String userid=(String) request.getSession().getAttribute("user_id");
+  
+		    Connection connection = DBConnection.getConnection();
+	            String query ="select * from expenses where user_id=? ORDER BY exp_date DESC";
+	            PreparedStatement preparedStatement = connection.prepareStatement(query);
+	            preparedStatement.setString(1, userid);
+
+	            ResultSet rs = preparedStatement.executeQuery();
+			
+			 
 			response.setContentType("text/html");
 			pw.println("<html><body><table border=\"1\">");
 			pw.println("<tr><th>Date</th><th>exp category</th><th>Description</th><th>Amount</th></tr>");
@@ -98,19 +105,12 @@ public class FetchUserExpensesServlet extends HttpServlet {
 			    pw.println("</tr>");
 			}
 			pw.println("</table></body></html>");
-		
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		} 
 		}
-	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

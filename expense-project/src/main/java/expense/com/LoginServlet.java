@@ -8,11 +8,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class LoginServlet
@@ -46,54 +48,48 @@ public class LoginServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-        String username = request.getParameter("user_name");
-        String url = "jdbc:mysql://localhost:3306/cijd-8216";
-        String dbUser = "root";
-        String dbPassword = "Madhu@405";
+	     String username = request.getParameter("user_name");
+	        //String password = request.getParameter("password");
 
-		
-		try {
-			
-			
-			
-                // Prepare SQL query
-				Class.forName("com.mysql.cj.jdbc.Driver");
-				Connection con = DriverManager.getConnection(url, dbUser, dbPassword);
+	        String user_id = getUserIdByUsername(username);
 
-                String sql = "SELECT user_name FROM user_info WHERE user_name = ?";
-                PreparedStatement preparedStatement = con.prepareStatement(sql);
-                preparedStatement.setString(1, username);
+	        if (user_id != null) {
+	            // Create a session
+	            HttpSession session = request.getSession();
+	            ServletContext sContext = getServletContext();
+	            // Set userId attribute in the session
+	            sContext.setAttribute("user_id", user_id);
+	            //session.setAttribute("user_id", user_id);
 
-                // Execute query
-                ResultSet resultSet = preparedStatement.executeQuery();
-                if (resultSet.next()) {
-                    // Username exists in the database
-                	response.sendRedirect("http://localhost:8081/expense-project/user_home.html");
-                } else {
-                    // Username does not exist in the database
-                    response.getWriter().write("Username does not exist");
-                	//response.sendRedirect("http://localhost:8081/expense-project/user_registration.html");
-                }
+	            // Redirect to a welcome page or any other page after successful login
+	            response.sendRedirect("http://localhost:8081/expense-project/user_home.html");
+	            session.setAttribute("user_id", user_id);
 
-                // Close resources
-                resultSet.close();
-                preparedStatement.close();
-                
-            
-			con.close();
-		}
+	        } else {
+	            // Redirect back to the login page with an error message
+	            response.sendRedirect("http://localhost:8081/expense-project/");
+	        }
+	    }
 
-        catch (SQLException e) {
-            e.printStackTrace();
-            response.getWriter().write("Database error");
-        
-    
-        } catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	    public String getUserIdByUsername(String username) {
+	        try (Connection connection = DBConnection.getConnection()) {
+	            String query = "SELECT user_id FROM user_info WHERE user_name = ?";
+	            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+	                preparedStatement.setString(1, username);
+
+	                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+	                    if (resultSet.next()) {
+	                        return resultSet.getString("user_id");
+	                    }
+	                }
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return null;
+	        }
+	        return null;
+	    }
 	}
-}
 
 		
 		

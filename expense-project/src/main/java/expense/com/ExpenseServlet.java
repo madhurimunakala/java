@@ -34,6 +34,7 @@ public class ExpenseServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String userid=(String) request.getSession().getAttribute("user_id");
         String expDate = request.getParameter("exp_date");
         String selectedOption = request.getParameter("dropdown");
         String expDesc= request.getParameter("exp_desc");
@@ -50,12 +51,13 @@ public class ExpenseServlet extends HttpServlet {
             // Establish a connection
             Connection connection = DriverManager.getConnection(url, dbUser, dbPassword);
             // Create a prepared statement
-            String query = "INSERT INTO   expenses(exp_date,exp_cat,exp_des,exp_amount) VALUES (?, ?,?,?)";
+            String query = "INSERT INTO   expenses(exp_date,exp_cat,exp_des,exp_amount,user_id) VALUES (?,?, ?,?,?)";
             try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 pstmt.setString(1, expDate);
                 pstmt.setString(2, selectedOption);
                 pstmt.setString(3, expDesc);
                 pstmt.setInt(4, expAmount);
+                pstmt.setString(5, userid);
 
                 // Execute the insert statement
                 int affectedRows = pstmt.executeUpdate();
