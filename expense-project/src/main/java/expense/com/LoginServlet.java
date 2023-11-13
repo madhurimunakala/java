@@ -52,6 +52,7 @@ public class LoginServlet extends HttpServlet {
 	        //String password = request.getParameter("password");
 
 	        String user_id = getUserIdByUsername(username);
+	        String userName = request.getParameter("user_name");
 
 	        if (user_id != null) {
 	            // Create a session
@@ -59,11 +60,15 @@ public class LoginServlet extends HttpServlet {
 	            ServletContext sContext = getServletContext();
 	            // Set userId attribute in the session
 	            sContext.setAttribute("user_id", user_id);
-	            //session.setAttribute("user_id", user_id);
+	            sContext.setAttribute("user_name", userName);
+	            
 
 	            // Redirect to a welcome page or any other page after successful login
-	            response.sendRedirect("http://localhost:8081/expense-project/user_home.html");
+	            response.sendRedirect("http://localhost:8081/expense-project/FetchUserExpensesServlet");
 	            session.setAttribute("user_id", user_id);
+	           session.setAttribute("user_name", userName);
+	          
+
 
 	        } else {
 	            // Redirect back to the login page with an error message

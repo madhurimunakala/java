@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,13 +39,19 @@ public class FetchUserExpensesServlet extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		try {
-  
-			response.setContentType("text/html");
 			PrintWriter pw=response.getWriter();
+			  ServletContext sContext = getServletContext();
+			String sessionUserName = sContext.getAttribute("user_name").toString();
+			System.out.println(sContext.getAttribute("user_name"));
+			response.setContentType("text/html");
+			//PrintWriter pw=response.getWriter();
 			pw.print("<div>\r\n"
 					+ "			<form action=\"http://localhost:8081/expense-project/ExpenseServlet\" method=\"\" >\r\n"
 					+ "				<table>\r\n"
 					+ "<tr>\r\n"
+					+"<td><input type='button' name='session_user_name' value='"+ sessionUserName+"'/></td>\r\n"
+							+ "					</tr>"
+							+ "					<tr>\r\n"
 					
 					+ "					<tr>\r\n"
 					+ "						<td>Expense Date:</td>\r\n"
@@ -105,6 +112,8 @@ public class FetchUserExpensesServlet extends HttpServlet {
 			    pw.println("</tr>");
 			}
 			pw.println("</table></body></html>");
+            //response.sendRedirect("http://localhost:8081/expense-project/ExpenseServlet");
+
 			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

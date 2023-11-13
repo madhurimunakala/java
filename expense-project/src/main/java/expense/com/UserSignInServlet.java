@@ -36,29 +36,7 @@ public class UserSignInServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-
-		
-		try {
-			//String userName=request.getParameter("user_name");
-			//int password= Integer.parseInt(request.getParameter("password"));
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cijd-8216","root","Madhu@405");
-			PreparedStatement stmt=con.prepareStatement("INSERT INTO   user_info(user_name, password) VALUES (?, ?)"); 
-			
-			//stmt.setInt(1, 102);
-			stmt.setInt(2,123);
-			stmt.setString(3,"pavani");  
-			stmt.execute();
-			System.out.println("data succesfully inseted");
-			con.close();  
-		}
-		catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		
-		}
-	}
+}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -68,26 +46,20 @@ public class UserSignInServlet extends HttpServlet {
 		        // Retrieve user information from the form
 		        String username = request.getParameter("user_name");
 		        String password = request.getParameter("password");
-		        //String email = request.getParameter("email");
-
-		        // Database connection parameters
-		        String url = "jdbc:mysql://localhost:3306/cijd-8216";
-		        String dbUser = "root";
-		        String dbPassword = "Madhu@405";
+		        
 
 		        try {
-		            // Load the JDBC driver
-		            Class.forName("com.mysql.cj.jdbc.Driver");
+		           
 
 		            // Establish a connection
-		            Connection connection = DriverManager.getConnection(url, dbUser, dbPassword);
+		            Connection connection = DBConnection.getConnection();
 
 		            // Create a prepared statement
 		            String query = "INSERT INTO   user_info(user_name, user_password) VALUES (?, ?)";
 		            try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 		                pstmt.setString(1, username);
 		                pstmt.setString(2, password);
-		               // pstmt.setString(3, email);
+		               
 
 		                // Execute the insert statement
 		                int affectedRows = pstmt.executeUpdate();

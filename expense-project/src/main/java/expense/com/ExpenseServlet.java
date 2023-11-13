@@ -39,17 +39,13 @@ public class ExpenseServlet extends HttpServlet {
         String selectedOption = request.getParameter("dropdown");
         String expDesc= request.getParameter("exp_desc");
         int expAmount = Integer.parseInt(request.getParameter("exp_amount"));
-        // Database connection parameters
-        String url = "jdbc:mysql://localhost:3306/cijd-8216";
-        String dbUser = "root";
-        String dbPassword = "Madhu@405";
+        
 
         try {
-            // Load the JDBC driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            
 
             // Establish a connection
-            Connection connection = DriverManager.getConnection(url, dbUser, dbPassword);
+            Connection connection = DBConnection.getConnection();
             // Create a prepared statement
             String query = "INSERT INTO   expenses(exp_date,exp_cat,exp_des,exp_amount,user_id) VALUES (?,?, ?,?,?)";
             try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -80,12 +76,10 @@ public class ExpenseServlet extends HttpServlet {
                 response.sendRedirect("http://localhost:8081/expense-project/FetchUserExpensesServlet");
                 
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         
-        //response.sendRedirect("http://localhost:8080/expense-project/index.html");
-            
-           // response.sendRedirect("http://localhost:8080/expense-project/index.html") ;  
+     
 
 }
 	}
