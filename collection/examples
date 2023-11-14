@@ -1,0 +1,54 @@
+package javacollections;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class JavaCollection {
+    //Date startDate = new Date();
+
+	String name;
+	String phNo;
+	String email;
+	JavaCollection(String name, String phNo, String email){
+		this.name = name;
+		this.phNo = phNo;
+		this.email = email;
+	}
+	public String toString() {
+		return(this.name+"::"+this.phNo+"::"+this.email);
+	}
+
+	public static void main(String[] args) {
+		  Date startDate = new Date();
+        System.out.println("Current Date and Time: " + startDate);
+
+		JavaCollection p1= new JavaCollection("satya", "1234","sat@gmail.com");
+		JavaCollection p5= new JavaCollection("raju", "2345","rat@gmail.com");
+		JavaCollection p2= new JavaCollection("cutiepie", "3456","cat@gmail.com");
+		JavaCollection p4= new JavaCollection("bharath", "4566","bat@gmail.com");
+		JavaCollection ptemp= new JavaCollection("satya", "1234","sat@gmail.com");
+      List<JavaCollection> genList = new ArrayList<JavaCollection>();
+		genList.add(p1);
+		genList.add(p2);
+		genList.add(p5);
+		genList.add(p4);
+		genList.add(ptemp);
+        //Collections.sort(genList);
+		
+		//System.out.println("From list:");
+		//for(JavaCollection x:genList) {
+			//System.out.println(x.toString());
+		//}
+		 
+
+	        //System.out.println("List with Duplicates Removed: " + listWithoutDuplicates);
+	    
+		 Date endDate = new Date();
+	     System.out.println("Current Date and Time: " + endDate);
+	}
+	
+}
